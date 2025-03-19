@@ -6,7 +6,7 @@ interface Drink {
     alcolholic: string, 
     category: string,
     glass: string,
-    image: string
+    image: string | null
 }
 
 interface Ingredient {
