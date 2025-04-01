@@ -14,7 +14,14 @@ interface Ingredient {
     measurement: string,
 }
 
+interface TimeRemaining {
+    hours: number;
+    minutes: number;
+    seconds: number;
+  }
+
 export type {
     Drink,
-    Ingredient
+    Ingredient,
+    TimeRemaining
 }
