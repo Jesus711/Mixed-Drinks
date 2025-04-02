@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let category: string = drink["strCategory"];
     let glass: string = drink["strGlass"]
     //let image: string = await getDrinkThumbnail(id)
-    let image = null;
+    let image = "https://www.thecocktaildb.com/images/media/drink/8xnyke1504352207.jpg"
 
     for(let i = 1; i < 16; i++) {
       let ingred_key: string = `strIngredient${i}`;
