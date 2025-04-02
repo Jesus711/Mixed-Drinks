@@ -1,0 +1,90 @@
+import DrinkCard from "@/components/DrinkCard";
+import { Drink, TimeRemaining } from "@/types";
+import { useEffect, useState } from "react";
+
+const Random = () => {
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [randomDrink, setRandomDrink] = useState<Drink>();
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>(getTimeUntilMidnight());
+
+
+  const getRandomDrink = async () => {
+    const random_drink = await fetch("/api/random").then(response => response.json())
+    console.log(random_drink)
+    setRandomDrink(random_drink);
+    return random_drink;
+  }
+
+  function getTimeUntilMidnight() {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0); // Set time to midnight
+
+    const diffMs = midnight.getTime() - now.getTime();
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+    return { hours, minutes, seconds };
+  }
+
+  useEffect(() => {
+    const getLastVisitedDate = async () => {
+      let lastDate = window.sessionStorage.getItem("last-visit")
+      let visit: Date = new Date();
+
+      // User Visited already
+      if (lastDate !== null) {
+
+        // If same day visit, get stored random drink
+        if (visit.toDateString() === lastDate) {
+          let drink = window.sessionStorage.getItem("random-drink");
+
+          // If drink exists, update randomDrink State
+          if (drink !== null && drink !== '{}') {
+            let drink_info: Drink = JSON.parse(drink)
+            console.log("Display Stored Drink")
+            setRandomDrink(drink_info);
+          }
+          else {
+            //User visited, but drink does not exist, generate a drink
+            console.log("Date Existed, Drink didn't")
+            window.sessionStorage.setItem('random-drink', JSON.stringify(await getRandomDrink()));
+          }
+        }
+      }
+      else {
+        console.log('First Visit: ', visit.toDateString());
+        window.sessionStorage.setItem('last-visit', visit.toDateString())
+        window.sessionStorage.setItem('random-drink', JSON.stringify(await getRandomDrink()));
+      }
+    }
+
+    getLastVisitedDate();
+    setIsLoading(false);
+
+    const interval = setInterval(() => {
+      setTimeRemaining(getTimeUntilMidnight());
+    }, 1000); // Update every second
+
+    return () => clearInterval(interval); // Cleanup on unmount
+
+  }, [])
+
+  return (
+    <section id="random" className="flex-1 flex justify-center items-start mt-6">
+
+      {isLoading ? 
+        <div className="text-center text-[40px]">Loading...</div> 
+        : 
+        <div className="flex flex-col justify-start items-center gap-10">
+          <h3 className="text-2xl font-semibold">New Random Drink in {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s          </h3>
+          <DrinkCard drinkInfo={randomDrink!} /> 
+        </div>
+      }
+    </section>
+  );
+}
+
+export default Random;
