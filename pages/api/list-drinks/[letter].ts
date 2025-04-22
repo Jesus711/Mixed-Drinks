@@ -57,11 +57,8 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Drink[]>) {
 
     const getDrinksWithLetter = async (char: string): Promise<Drink[]> => {
-
-      const drinksWithLetter = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${char}`).then(
-        response => response.json()
-      )
-
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${char}`)
+      const drinksWithLetter = await response.json();
       return drinksWithLetter.drinks;
     }
 
@@ -77,16 +74,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return null
     }
 
+    
     let { letter } = req.query;
-
     if (typeof letter !== "string"){
       return
     }
 
     let drinks = await getDrinksWithLetter(letter)
 
-    const response: Drink[] = [];
+    // If drinks with the queried letter do not exist return an empty list to the client
+    if (!drinks){
+      res.status(200).json([])
+      return;
+    }
 
+    // Iterates through all drinks retrieved starting with the queried letter
+    // Creates Drink objects, storing all necessary information
+    const response: Drink[] = [];
     for(let i = 0; i < drinks.length; i++) {
 
       let drink = drinks[i];
