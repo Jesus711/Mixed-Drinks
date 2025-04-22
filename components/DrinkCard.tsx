@@ -12,7 +12,7 @@ const DrinkCard = ({ drinkInfo }: { drinkInfo: Drink }) => {
         <div className='flex justify-center items-center'>
         <Image priority src={drinkInfo.image} alt={drinkInfo.name} width={300} height={300} className="rounded-xl object-cover" />
         </div> 
-        <div className="mt-4 col-end-1">
+        <div className="mt-4">
           <h2 className="text-[28px] font-semibold">{drinkInfo.name}</h2>
           <div className='flex justify-center items-center gap-x-4'>
             <span className="mt-3 inline-block bg-gray-200 text-gray-800 px-2 py-1 rounded-md text-lg">{drinkInfo.alcolholic}</span>
