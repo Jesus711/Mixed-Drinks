@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       const random_drink = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php").then(
         response => response.json()
       )
-      console.log(random_drink);
+      
       return random_drink.drinks[0];
     }
 
@@ -76,7 +76,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       return null
     }
 
-    //drink = await getRandomDrink();
+    drink = await getRandomDrink();
 
     let id: number = Number(drink["idDrink"]);
     let name: string = drink["strDrink"];
@@ -85,8 +85,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     let alcoholic: string = drink["strAlcoholic"];
     let category: string = drink["strCategory"];
     let glass: string = drink["strGlass"]
-    //let image: string = await getDrinkThumbnail(id)
-    let image = "https://www.thecocktaildb.com/images/media/drink/8xnyke1504352207.jpg"
+    let image: string = await getDrinkThumbnail(id)
+    // let image = "https://www.thecocktaildb.com/images/media/drink/8xnyke1504352207.jpg"
 
     for(let i = 1; i < 16; i++) {
       let ingred_key: string = `strIngredient${i}`;
@@ -109,8 +109,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       glass: glass,
       image: image,
     }
-
-
 
   res.status(200).json(response);
 }
