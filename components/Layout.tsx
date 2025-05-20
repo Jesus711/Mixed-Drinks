@@ -12,13 +12,13 @@ const Layout = ({ children }: { children: ReactNode }) => {
             <header className="bg-blue-900 text-white p-4">
                 <nav className="container mx-auto flex justify-between items-center">
                     <div className="text-left" onClick={() => window.location.href = "/"}>
-                        <h1 className="text-[28px] font-semibold">Mixed Bevs</h1>
-                        <p className="text-[18px]">Find and Learn new Drinks!</p>
+                        <h1 className="text-[32px] font-semibold">Mixed Bevs</h1>
+                        <p className="text-[22px]">Find and Learn new Drinks!</p>
                     </div>
-                    <ul className="flex space-x-8 text-[24px] font-semibold">
+                    <ul className="flex space-x-8 text-[26px] font-semibold">
                         <li><Link href="/" className={`${path == '/' && 'text-orange-400'}`}>Home</Link></li>
                         <li><Link href="/random" className={`${path == '/random' && 'text-orange-400'}`}>Today's Random Bev</Link></li>
-                        <li><Link href="/list" className={`${path == '/list' && 'text-orange-400'}`}>Alcohol List</Link></li>
+                        <li><Link href="/list" className={`${path == '/list' && 'text-orange-400'}`}>List by Letter</Link></li>
                     </ul>
                 </nav>
             </header>
