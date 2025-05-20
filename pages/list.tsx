@@ -91,7 +91,7 @@ const List = () => {
       </ul>
 
       {/* Message to tell user to select a char to begin fetching drinks */}
-      {activeChar === "" && <p className='flex-1 flex justify-center items-center text-orange-400 text-3xl text-center font-semibold'>Click on the any letter to see the drinks starting with that letter</p>}
+      {activeChar === "" && <p className='flex-1 flex justify-center items-center text-orange-400 text-3xl text-center font-semibold'>Click any Letter to see results</p>}
 
       {/* Showing Loading message. Then show Drinks List with instruction on the top */}
       {isLoading ?
