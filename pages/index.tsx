@@ -19,6 +19,8 @@ export default function Home() {
 
   const router = useRouter();
   const { search, category } = router.query;
+
+  // Format user's search to display without underscore characters
   let searchFormatted = "";
   if (typeof search === "string"){
     searchFormatted = search.split("_").join(" ")
@@ -47,6 +49,11 @@ export default function Home() {
   }
 
   useEffect(() => {
+    // Abortcontroller to handle aborting previous fetch requests when user clicks or makes multiple searches
+    // without the search not finishing executing
+    const abortController: AbortController = new AbortController();
+    const signal = abortController.signal;
+
     const getSearchFilters = async () => {
       let fetchedFilters = sessionStorage.getItem("filters")
       if(fetchedFilters) {
@@ -65,16 +72,24 @@ export default function Home() {
     }
 
     const getSearchQuery = async () => {
+      // Try and catch to handle unhandled runtime error
+      // Pass the signal of the abortController
+      try {
+        const response = await fetch(`/api/search/${search}?category=${category}`, {signal})
+        const result = await response.json();
+        localStorage.setItem("search", search);
+        localStorage.setItem("searchResult", JSON.stringify(result))
+        setSearchResult(result);
+        // Keep setSearching here instead of finally to keep the Loading component display for new search user made
+        setSearching(false);
 
-      const response = await fetch(`/api/search/${search}?category=${category}`)
-      const result = await response.json();
-      console.log(result);
-
-      localStorage.setItem("search", search);
-      localStorage.setItem("searchResult", JSON.stringify(result))
-
-      setSearching(false);
-      setSearchResult(result);
+      } catch (error: any){
+        if (error.name === "AbortError"){
+          console.log("Fetch from previous search aborted")
+        } else {
+          console.error("Unhandled fetch error:", error);
+        }
+      }
     }
 
     getSearchFilters();
@@ -99,6 +114,11 @@ export default function Home() {
     else {
       setSearchValue("")
       setSearchResult([])
+    }
+
+    // Cleanup function to abort the controller when the search changes
+    return () => {
+      abortController.abort();
     }
 
 
