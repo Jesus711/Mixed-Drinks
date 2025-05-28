@@ -28,7 +28,7 @@ const DrinkListItem = ({ drinkInfo }: { drinkInfo: Drink }) => {
             <h2 className="text-[28px] font-semibold">{drinkInfo.name}</h2>
             <h3 className="mt-2 text-left font-semibold text-[20px] underline">Ingredients:</h3>
             <ul className="flex flex-wrap justify-start items-center text-wrap gap-x-2">
-              {drinkInfo?.ingredients.map((ingredient, index) => {
+              {drinkInfo?.ingredients.slice(0, Math.min(4, drinkInfo?.ingredients.length)).map((ingredient, index) => {
                 if ((ingredient.name === null || ingredient.name === '') && (ingredient.measurement === null || ingredient.measurement === '')) {
                   return;
                 }
@@ -37,6 +37,7 @@ const DrinkListItem = ({ drinkInfo }: { drinkInfo: Drink }) => {
                   <span key={index} className="font-medium mt-3 inline-block bg-orange-400 text-gray-800 px-2 py-1 rounded-md text-md">{ingredient.name}</span>
                 )
               })}
+              {drinkInfo?.ingredients.length > 4 && <span className="text-3xl mt-3 inline-block text-orange-400">...</span>}
             </ul>
 
         <h3 className="mt-5 text-left font-semibold text-[20px] underline">Categories</h3>
