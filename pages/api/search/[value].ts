@@ -124,6 +124,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       for(let i = 1; i < 16; i++) {
         let ingred_key: string = `strIngredient${i}`;
         let measurement_key: string = `strMeasure${i}`;
+        if (drink[ingred_key] === null){
+          continue
+        }
         let ingredient: Ingredient = {
           name: drink[ingred_key],
           measurement: drink[measurement_key] === "/n" ? null : drink[measurement_key]
