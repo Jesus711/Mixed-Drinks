@@ -42,7 +42,7 @@ const DrinkCard = ({ drinkInfo }: { drinkInfo: Drink }) => {
                 }
 
                 return (
-                  <li key={index} className='text-[26px]'> <span className='font-semibold'>{ingredient.name}</span>{ingredient.measurement ? `: ${ingredient.measurement}` : " - Add Desired Amount"}</li>
+                  <li key={index} className='text-[26px]'> <span className='font-semibold'>{ingredient.name}</span>{ingredient.measurement && ingredient.measurement !== "/n" ? `: ${ingredient.measurement}` : " - Add Desired Amount"}</li>
                 )
               })}
             </ul>
