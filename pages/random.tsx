@@ -32,7 +32,7 @@ const Random = () => {
 
   useEffect(() => {
     const getLastVisitedDate = async () => {
-      let lastDate = window.sessionStorage.getItem("last-visit")
+      let lastDate = window.localStorage.getItem("last-visit")
       let visit: Date = new Date();
 
       // User Visited already
@@ -40,7 +40,7 @@ const Random = () => {
 
         // If same day visit, get stored random drink
         if (visit.toDateString() === lastDate) {
-          let drink = window.sessionStorage.getItem("random-drink");
+          let drink = window.localStorage.getItem("random-drink");
 
           // If drink exists, update randomDrink State
           if (drink !== null && drink !== '{}') {
@@ -50,26 +50,25 @@ const Random = () => {
           }
           else {
             //User visited, but drink does not exist, generate a drink
-            console.log("Date Existed, Drink didn't")
+            console.log("Date Existed, Drink didn't", drink)
             let drink_info = await getRandomDrink();
             setRandomDrink(drink_info)
-            window.sessionStorage.setItem('random-drink', JSON.stringify(drink_info));
+            window.localStorage.setItem('random-drink', JSON.stringify(drink_info));
           }
         }
       }
       else {
         console.log('First Visit: ', visit.toDateString());
-        window.sessionStorage.setItem('last-visit', visit.toDateString())
+        window.localStorage.setItem('last-visit', visit.toDateString())
         let drink_info = await getRandomDrink();
+        window.localStorage.setItem('random-drink', JSON.stringify(drink_info));
         setRandomDrink(drink_info)
-        window.sessionStorage.setItem('random-drink', JSON.stringify(drink_info));
       }
     }
 
     (async () => {
       await getLastVisitedDate();
-      setTimeout(() => setIsLoading(false), 500)
-      //setIsLoading(false);
+      setTimeout(() => setIsLoading(false), 300)
     })();
 
     const interval = setInterval(() => {
