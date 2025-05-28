@@ -84,7 +84,7 @@ const Random = () => {
     <section id="random" className="flex-1 flex justify-center items-start mt-6">
 
       {isLoading? 
-        <Loading message="Loading" />
+        <Loading message="Loading Drink" />
         : 
         <div className="flex flex-col justify-start items-center gap-10">
           <h3 className="text-2xl font-semibold">New Random Drink in {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s          </h3>
