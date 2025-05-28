@@ -28,8 +28,8 @@ const DrinkCard = ({ drinkInfo }: { drinkInfo: Drink }) => {
           <div className='flex justify-center items-center'>
             <Image priority src={drinkInfo.image} alt={drinkInfo.name} width={300} height={300} className="rounded-xl object-cover" />
           </div>
-          <div className="mt-2">
-            <h2 className="text-[32px] text-center font-semibold">{drinkInfo.name}</h2>
+          <div className="mt-2 w-[300px]">
+            <h2 className="text-[28px] text-center font-semibold text-wrap">{drinkInfo.name}</h2>
           </div>
         </div>
         <div className='flex flex-col p-4'>
