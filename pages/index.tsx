@@ -1,6 +1,7 @@
 import DrinkListItem from "@/components/DrinkListItem";
 import Filter from "@/components/Filter";
 import Loading from "@/components/Loading";
+import MobileDrinkItemCard from "@/components/MobileDrinkItemCard";
 import SearchOptionButton from "@/components/SearchOptionButton";
 import { Drink } from "@/types";
 import { useRouter } from "next/router";
@@ -134,15 +135,15 @@ export default function Home() {
 
   return (
     <div className="flex-1 flex flex-col">
-      <div className="flex flex-col">
-          <h1 className={`text-center text-6xl font-bold text-orange-400`}>Welcome to Mixed Bevs!</h1>
-          <p className={`text-center my-2 text-2xl font-semibold`}>Select one of the search options below to start finding Mixed Bevs</p>
+      <div className="flex flex-col justify-center items-center">
+          <h1 className={`text-center lg:text-6xl text-2xl font-bold text-orange-400`}>Welcome to Mixed Bevs!</h1>
+          <p className={`text-center lg:my-2 my-0.5 lg:text-2xl sm:w-auto w-[80%] sm:text-md text-sm font-semibold`}>Select one of the search options below to start finding Mixed Bevs</p>
       </div>
 
 
-      <div className="mt-3 flex justify-center items-center">
-        <h2 className="text-3xl mr-2 font-bold">Search Options: </h2>
-        <div className="flex justify-between gap-x-4 text-2xl font-bold hover">
+      <div className="mt-3 sm:flex justify-center items-center">
+        <h2 className="lg:text-3xl text-xl mr-2 font-bold text-center">Search Options: </h2>
+        <div className="flex sm:justify-between sm:flex-nowrap flex-wrap gap-y-2 sm:gap-y-0 justify-center lg:gap-x-4 gap-x-2.5 lg:text-2xl sm:text-lg font-bold hover">
           <SearchOptionButton searchCategory={searchCategory} handleOptionClick={(option) => setSearchCategory(option)} option="Name" />
           <SearchOptionButton searchCategory={searchCategory} handleOptionClick={(option) => setSearchCategory(option)} option="Category" />
           <SearchOptionButton searchCategory={searchCategory} handleOptionClick={(option) => setSearchCategory(option)} option="Ingredients" />
@@ -152,10 +153,14 @@ export default function Home() {
       </div>
 
       {/* Search Bar */}
-      <div className={`${searchCategory === "Name" ? "flex" : "hidden"} mt-5 flex-col justify-center items-center`}>
-        <div className="flex gap-x-1">
-        <input type="search" placeholder="Enter Drink Name..."  value={searchValue} onChange={(e) => setSearchValue(e.target.value.toLowerCase())} className="bg-blue-600 rounded-md w-[300px] px-4 py-3 text-white text-2xl font-semibold border-none outline-none placeholder:text-white"/>
-        <button onClick={() => handleSearch()} className="bg-orange-400 px-2 py-2 text-2xl rounded-md text-black font-semibold">Search</button>
+      <div className={`${searchCategory === "Name" ? "flex" : "hidden"} w-full lg:mt-5 mt-8 flex-col justify-center items-center`}>
+        <div className="w-full flex sm:flex-row flex-col justify-center items-center sm:items-stretch sm:gap-x-1 gap-y-2">
+          <input 
+            type="search" 
+            placeholder="Enter Drink Name..."  
+            value={searchValue} onChange={(e) => setSearchValue(e.target.value.toLowerCase())} 
+            className="bg-blue-600 rounded-md sm:w-[300px] w-[80%] px-4 py-3 text-white lg:text-2xl sm:text-xl font-semibold border-none outline-none placeholder:text-white"/>
+          <button onClick={() => handleSearch()} className="bg-orange-400 px-2 py-2 lg:text-2xl sm:text-xl rounded-md text-black font-semibold">Search</button>
         </div>
       </div>
 
@@ -172,12 +177,17 @@ export default function Home() {
         </div> 
         : search !== undefined && (
           <div>
-            <h1 className="text-4xl font-semibold mb-3">Search Results for {searchFormatted}:</h1>
-            <div className="flex flex-row flex-wrap gap-5 justify-center items-center">
+            <h1 className="lg:text-4xl text-2xl font-semibold mb-3">Search Results for {searchFormatted}:</h1>
+            <div className="sm:flex hidden flex-row flex-wrap gap-5 justify-center items-center">
               {searchResult.map((drink, index) => (
                 <DrinkListItem drinkInfo={drink} key={index} />
               ))}
             </div>
+            <div className='sm:hidden flex mt-8 flex-1 flex-wrap justify-center items-center gap-4'>
+            {searchResult.map((drink, index) => (
+              <MobileDrinkItemCard key={index} drinkInfo={drink} />
+            ))}
+          </div> 
           </div>
         )}
 

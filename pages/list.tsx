@@ -1,5 +1,6 @@
 import DrinkListItem from '@/components/DrinkListItem';
 import Loading from '@/components/Loading';
+import MobileDrinkItemCard from '@/components/MobileDrinkItemCard';
 import { Drink } from '@/types';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
@@ -76,13 +77,13 @@ const List = () => {
   
   return (
     <section id="drinks-by-letter" className='flex-1 flex flex-col justify-start items-center'>
-      <h2 className='text-center text-3xl font-semibold'>List Drinks by the first letter</h2>
+      <h2 className='text-center sm:text-3xl text-xl font-semibold'>List Drinks by the first letter</h2>
       {/* Displays all capital letters. Active char will be orange */}
-      <ul className='flex gap-x-6 justify-center items-center mt-5'>
+      <ul className='flex xl:flex-nowrap flex-wrap sm:gap-x-6 gap-x-3 justify-center items-center mt-5'>
         {capitalLetters.map((char, index) => (
           <li 
             key={index} 
-            className={`underline font-semibold text-3xl hover:cursor-pointer hover:text-cyan-500 ${activeChar === char && "text-orange-400"}`}
+            className={`underline font-semibold sm:text-3xl text-xl hover:cursor-pointer hover:text-cyan-500 ${activeChar === char && "text-orange-400"}`}
             onClick={() => handleLetterClick(char)}
           >
             {char}
@@ -98,11 +99,15 @@ const List = () => {
       <Loading message={`Loading Drinks that start with ${activeChar}...`}/>
       : 
         <div className='pt-5'>
-          {activeChar && !isLoading && drinksList.length > 0 && <h3 className='text-center font-bold text-2xl'>Click drink card to see instructions and more!</h3>}
-          <div className='mt-8 flex-1 flex flex-wrap justify-center items-center gap-4'>
-          
+          {activeChar && !isLoading && drinksList.length > 0 && <h3 className='text-center font-bold sm:text-2xl text-lg'>Click drink card to see instructions and more!</h3>}
+          <div className='sm:flex hidden mt-8 flex-1 flex-wrap justify-center items-center gap-4'>
             {drinksList.map((drink, index) => (
               <DrinkListItem key={index} drinkInfo={drink} />
+            ))}
+          </div> 
+          <div className='sm:hidden flex mt-8 flex-1 flex-wrap justify-center items-center gap-4'>
+            {drinksList.map((drink, index) => (
+              <MobileDrinkItemCard key={index} drinkInfo={drink} />
             ))}
           </div> 
         </div>

@@ -1,5 +1,6 @@
 import DrinkCard from '@/components/DrinkCard';
 import Loading from '@/components/Loading';
+import MobileDrinkCard from '@/components/MobileDrinkCard';
 import { Drink } from '@/types';
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -23,8 +24,13 @@ const Details = () => {
     }
 
   return (
-    <div className='w-full h-full flex flex-col justify-center items-center'>
-      <DrinkCard drinkInfo={drinkInfo} />
+    <div className='flex-1 flex flex-col justify-center items-center p-4'>
+      <div className='sm:block hidden'>
+        <DrinkCard drinkInfo={drinkInfo} />
+      </div>
+      <div className='sm:hidden block'>
+        <MobileDrinkCard drinkInfo={drinkInfo} />
+      </div>
     </div>
   )
 }
