@@ -1,5 +1,6 @@
 import DrinkCard from "@/components/DrinkCard";
 import Loading from "@/components/Loading";
+import MobileDrinkCard from "@/components/MobileDrinkCard";
 import { Drink, TimeRemaining } from "@/types";
 import { useEffect, useState } from "react";
 
@@ -52,12 +53,17 @@ const Random = () => {
             //User visited, but drink does not exist, generate a drink
             console.log("Date Existed, Drink didn't", drink)
             let drink_info = await getRandomDrink();
-            setRandomDrink(drink_info)
             window.localStorage.setItem('random-drink', JSON.stringify(drink_info));
+            setRandomDrink(drink_info)
           }
+        } else {
+          // Different Date
+          let drink_info = await getRandomDrink();
+          window.localStorage.setItem('random-drink', JSON.stringify(drink_info));
+          window.localStorage.setItem('last-visit', visit.toDateString())
+          setRandomDrink(drink_info)
         }
-      }
-      else {
+      } else {
         console.log('First Visit: ', visit.toDateString());
         window.localStorage.setItem('last-visit', visit.toDateString())
         let drink_info = await getRandomDrink();
@@ -85,9 +91,14 @@ const Random = () => {
       {isLoading? 
         <Loading message="Loading Drink" />
         : 
-        <div className="flex flex-col justify-start items-center gap-10">
-          <h3 className="text-2xl font-semibold">New Random Drink in {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s          </h3>
-          <DrinkCard drinkInfo={randomDrink!} /> 
+        <div className="flex flex-col justify-start items-center lg:gap-y-10 gap-y-5">
+          <h3 className="lg:text-2xl sm:text-xl text-lg font-semibold">New Random Drink in {timeRemaining.hours}h {timeRemaining.minutes}m {timeRemaining.seconds}s          </h3>
+          <div className="sm:flex hidden justify-center items-center">
+            <DrinkCard drinkInfo={randomDrink!} /> 
+          </div>
+          <div className="sm:hidden block">
+            <MobileDrinkCard drinkInfo={randomDrink!} /> 
+          </div>
         </div>
       }
     </section>
