@@ -26,7 +26,7 @@ const DrinkCard = ({ drinkInfo }: { drinkInfo: Drink }) => {
       <div className='flex'>
         <div>
           <div className='flex justify-center items-center'>
-            <Image priority src={drinkInfo.image} alt={drinkInfo.name} width={300} height={300} className="rounded-xl object-cover" />
+            <Image priority src={drinkInfo.image ? drinkInfo.image : ""} alt={drinkInfo?.name} width={300} height={300} className="rounded-xl object-cover" />
           </div>
           <div className="mt-2 lg:w-[300px]">
             <h2 className="text-[32px] text-center font-semibold text-wrap">{drinkInfo.name}</h2>

@@ -22,7 +22,7 @@ const MobileDrinkCard = ({ drinkInfo }: { drinkInfo: Drink }) => {
 
     return (
         <div className="lg:p-4 p-2 rounded-2xl border-4 border-gray-300 flex flex-col justify-center items-center bg-blue-900 text-white shadow-[6px_6px_12px_rgba(59,130,246,0.5)]">
-            <Image priority src={drinkInfo.image} alt={drinkInfo.name} width={300} height={300} className="rounded-xl object-cover" />
+            <Image priority src={drinkInfo.image ? drinkInfo.image : ""} alt={drinkInfo.name} width={300} height={300} className="rounded-xl object-cover" />
             <h2 className="text-[32px] text-center font-semibold text-wrap">{drinkInfo.name}</h2>
             {/*Ingredients + Categories*/}
             <div className='flex flex-col'>

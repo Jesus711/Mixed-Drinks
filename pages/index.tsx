@@ -76,6 +76,10 @@ export default function Home() {
       // Try and catch to handle unhandled runtime error
       // Pass the signal of the abortController
       try {
+        if (typeof search != "string"){
+          alert("Search is not a string.")
+          return;
+        }
         const response = await fetch(`/api/search/${search}?category=${category}`, {signal})
         const result = await response.json();
         localStorage.setItem("search", search);

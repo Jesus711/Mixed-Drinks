@@ -21,7 +21,7 @@ const DrinkListItem = ({ drinkInfo }: { drinkInfo: Drink }) => {
       
       <div className='h-full flex-1 flex px-1'>
         <div className='flex justify-start sm:w-auto w-[200px]'>
-          <Image priority src={drinkInfo.image} alt={drinkInfo.name} width={180} height={180} className="min-w-[180px] min-h-[180px] rounded-xl object-cover" />
+          <Image priority src={drinkInfo.image ? drinkInfo.image : ""} alt={drinkInfo.name} width={180} height={180} className="min-w-[180px] min-h-[180px] rounded-xl object-cover" />
         </div>
 
         <div className='sm:flex flex-col justify-start items-start px-3'>
